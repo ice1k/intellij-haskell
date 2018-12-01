@@ -67,8 +67,11 @@ general_pragma_content      ::= (CON_ID | VAR_ID | CONSYM_ID | VARSYM_ID |
                                   INSTANCE | MODULE | WHERE | DO | LET | IN | CASE | OF | IF | THEN | ELSE | IMPORT | DIRECTIVE)+
 
 
-module_body                 ::= module_declaration onl body | onl body
+module_body                 ::= module_declaration | onl body
 module_declaration          ::= MODULE modid onl pragma? onl (exports onl)? WHERE
+                                LEFT_BRACE
+                                body
+                                RIGHT_BRACE
 
 private body                ::= import_declarations top_declarations  (NEWLINE | DIRECTIVE)*
 cfiles_pragma               ::= pragma

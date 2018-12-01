@@ -1,14 +1,14 @@
 // This is a generated file. Not intended for manual editing.
 package intellij.haskell.psi.impl;
 
+import java.util.List;
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
+import static intellij.haskell.psi.HaskellTypes.*;
 import intellij.haskell.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-
-import java.util.List;
 
 public class HaskellModuleBodyImpl extends HaskellCompositeElementImpl implements HaskellModuleBody {
 
@@ -26,9 +26,9 @@ public class HaskellModuleBodyImpl extends HaskellCompositeElementImpl implement
   }
 
   @Override
-  @NotNull
+  @Nullable
   public HaskellImportDeclarations getImportDeclarations() {
-    return notNullChild(PsiTreeUtil.getChildOfType(this, HaskellImportDeclarations.class));
+    return PsiTreeUtil.getChildOfType(this, HaskellImportDeclarations.class);
   }
 
   @Override
@@ -37,16 +37,16 @@ public class HaskellModuleBodyImpl extends HaskellCompositeElementImpl implement
     return PsiTreeUtil.getChildOfType(this, HaskellModuleDeclaration.class);
   }
 
-    @Override
-    @Nullable
-    public HaskellTopDeclaration getTopDeclaration() {
-        return PsiTreeUtil.getChildOfType(this, HaskellTopDeclaration.class);
-    }
+  @Override
+  @Nullable
+  public HaskellTopDeclaration getTopDeclaration() {
+    return PsiTreeUtil.getChildOfType(this, HaskellTopDeclaration.class);
+  }
 
   @Override
   @NotNull
   public List<HaskellTopDeclarationLine> getTopDeclarationLineList() {
-      return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellTopDeclarationLine.class);
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellTopDeclarationLine.class);
   }
 
 }

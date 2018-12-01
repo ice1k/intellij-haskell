@@ -1,6 +1,10 @@
 package intellij.haskell;
+
 import com.intellij.lexer.*;
+import com.intellij.psi.TokenType;
 import com.intellij.psi.tree.IElementType;
+import com.intellij.util.containers.IntStack;
+import intellij.haskell.psi.HaskellTypes;
 import static intellij.haskell.psi.HaskellTypes.*;
 
 %%
@@ -8,7 +12,38 @@ import static intellij.haskell.psi.HaskellTypes.*;
 %{
   public _HaskellLexer() {
     this((java.io.Reader)null);
+    stateMonad.push(YYINITIAL);
   }
+
+  private static final int EMPTY_LAYOUT = -3;
+  private static final int NO_LAYOUT = -2;
+  private final IntStack layoutMonad = new IntStack();
+  private final IntStack stateMonad = new IntStack();
+
+  private void pushLexState(int newState) {
+    stateMonad.push(newState);
+    yybegin(newState);
+  }
+
+  private int popLexState() {
+    int oldState = yystate();
+    assert !stateMonad.empty();
+    yybegin(stateMonad.pop());
+    return oldState;
+  }
+
+  private void pushLayout(int newLayout) {
+    layoutMonad.push(newLayout);
+  }
+
+  private int getLayout() {
+    return layoutMonad.empty() ? EMPTY_LAYOUT : layoutMonad.peek();
+  }
+
+  private int popLayout() {
+    return layoutMonad.pop();
+  }
+
 %}
 
 %public
@@ -17,10 +52,12 @@ import static intellij.haskell.psi.HaskellTypes.*;
 %function advance
 %type IElementType
 %unicode
+%column
 
 %{
     private int commentStart;
     private int commentDepth;
+    private int yycolumn = -1;
 
     private int haddockStart;
     private int haddockDepth;
@@ -29,7 +66,7 @@ import static intellij.haskell.psi.HaskellTypes.*;
     private int qqDepth;
 %}
 
-%xstate NCOMMENT, NHADDOCK, QQ
+%xstate NCOMMENT, NHADDOCK, QQ, LAYOUT, BOL
 
 newline             = \r|\n|\r\n
 unispace            = \x05
@@ -128,6 +165,49 @@ haddock             = {dash}{dash}{white_char}[\^\|][^\r\n]* ({newline}{white_ch
 nhaddock_start      = {left_brace}{dash}{white_char}?{vertical_bar}
 
 %%
+
+<BOL> {
+    {newline} {}
+    [^]       {
+        int n = getLayout();
+        switch (n) {
+            case EMPTY_LAYOUT:
+            case NO_LAYOUT:
+                popLexState();
+                break;
+            default:
+                if (yycolumn < n) {
+                    popLayout();
+                    return HS_RIGHT_BRACE;
+                } else if (yycolumn == n) {
+                    popLexState();
+                    yypushback(1);
+                    return HS_SEMICOLON;
+                } else {
+                    popLexState();
+                    yypushback(1);
+                }
+                break;
+        }
+    }
+}
+
+<LAYOUT> {
+    {newline}    {}
+
+    {left_brace} {
+        popLexState();
+        pushLayout(NO_LAYOUT);
+        return HS_LEFT_BRACE;
+    }
+
+    [^]          {
+        popLexState();
+        pushLayout(yycolumn);
+        yypushback(1);
+        return HS_LEFT_BRACE;
+    }
+}
 
 <NHADDOCK> {
     {nhaddock_start} {
@@ -230,7 +310,7 @@ nhaddock_start      = {left_brace}{dash}{white_char}?{vertical_bar}
     qqStart = getTokenStart();
 }
 
-    {newline}             { return HS_NEWLINE; }
+    {newline}             { pushLexState(BOL); return HS_NEWLINE; }
 
     {haddock}             { return HS_HADDOCK; }
     {pragma_start}        { return HS_PRAGMA_START; }
@@ -253,23 +333,23 @@ nhaddock_start      = {left_brace}{dash}{white_char}?{vertical_bar}
     "data"                { return HS_DATA; }
     "default"             { return HS_DEFAULT; }
     "deriving"            { return HS_DERIVING; }
-    "do"                  { return HS_DO; }
+    "do"                  { pushLexState(LAYOUT); return HS_DO; }
     "else"                { return HS_ELSE; }
 //    "foreign"             { return HS_FOREIGN; } used together with import and export, see specialreservedid
     "if"                  { return HS_IF; }
     "import"              { return HS_IMPORT; }
-    "in"                  { return HS_IN; }
+    "in"                  { pushLexState(LAYOUT); return HS_IN; }
     "infix"               { return HS_INFIX; }
     "infixl"              { return HS_INFIXL; }
     "infixr"              { return HS_INFIXR; }
     "instance"            { return HS_INSTANCE; }
-    "let"                 { return HS_LET; }
+    "let"                 { pushLexState(LAYOUT); return HS_LET; }
     "module"              { return HS_MODULE; }
     "newtype"             { return HS_NEWTYPE; }
-    "of"                  { return HS_OF; }
+    "of"                  { pushLexState(LAYOUT); return HS_OF; }
     "then"                { return HS_THEN; }
     "type"                { return HS_TYPE; }
-    "where"               { return HS_WHERE; }
+    "where"               { pushLexState(LAYOUT); return HS_WHERE; }
     "_"                   { return HS_UNDERSCORE; }
 
     // identifiers

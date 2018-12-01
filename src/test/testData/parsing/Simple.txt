@@ -1,0 +1,41 @@
+Haskell file
+  HS_FILE_HEADER
+    <empty list>
+  HS_MODULE_BODY
+    HS_IMPORT_DECLARATIONS
+      <empty list>
+    HS_TOP_DECLARATION_LINE
+      HS_TOP_DECLARATION
+        HS_EXPRESSION
+          HS_RESERVED_ID
+            PsiElement(HaskellTokenType.MODULE)('module')
+          PsiWhiteSpace(' ')
+          HS_Q_NAME
+            HS_VAR_CON
+              Conid_Impl
+                PsiElement(HaskellTokenType.CON_ID)('Simple')
+          PsiWhiteSpace(' ')
+          HS_RESERVED_ID
+            PsiElement(HaskellTokenType.WHERE)('where')
+          PsiElement(HaskellTokenType.LEFT_BRACE)('\n\n')
+          HS_RESERVED_ID
+            PsiElement(HaskellTokenType.IMPORT)('import')
+          PsiWhiteSpace(' ')
+          HS_Q_NAME
+            HS_Q_VAR_CON
+              HS_Q_CON
+                HS_Q_CON_QUALIFIER_1
+                  Conid_Impl
+                    PsiElement(HaskellTokenType.CON_ID)('Data')
+                PsiElement(HaskellTokenType.DOT)('.')
+                Conid_Impl
+                  PsiElement(HaskellTokenType.CON_ID)('List')
+      PsiElement(HaskellTokenType.NEWLINE)('\n')
+    HS_TOP_DECLARATION
+      HS_EXPRESSION
+        PsiElement(HaskellTokenType.SEMICOLON)('\n')
+  PsiErrorElement:<q name>, <reserved id>, HaskellTokenType.AT, HaskellTokenType.BACKQUOTE, HaskellTokenType.BACKSLASH, HaskellTokenType.CHARACTER_LITERAL, HaskellTokenType.COLON_COLON, HaskellTokenType.COMMA, HaskellTokenType.DECIMAL, HaskellTokenType.DIRECTIVE, HaskellTokenType.DOT, HaskellTokenType.DOUBLE_RIGHT_ARROW, HaskellTokenType.EQUAL, HaskellTokenType.FLOAT, HaskellTokenType.HEXADECIMAL, HaskellTokenType.INFIX, HaskellTokenType.INFIXL, HaskellTokenType.INFIXR, HaskellTokenType.LEFT_ARROW, HaskellTokenType.LEFT_BRACE, HaskellTokenType.LEFT_BRACKET, HaskellTokenType.LEFT_PAREN, HaskellTokenType.NEWLINE, HaskellTokenType.OCTAL, HaskellTokenType.PRAGMA_START, HaskellTokenType.QUASIQUOTE, HaskellTokenType.QUOTE, HaskellTokenType.RIGHT_ARROW, HaskellTokenType.RIGHT_BRACE, HaskellTokenType.RIGHT_BRACKET, HaskellTokenType.RIGHT_PAREN, HaskellTokenType.SEMICOLON, HaskellTokenType.STRING_LITERAL, HaskellTokenType.TILDE or HaskellTokenType.VERTICAL_BAR expected, got 'f :: Int
+f = 1
+
+suc ...'
+    PsiElement(BAD_CHARACTER)('f :: Int\nf = 1\n\nsuc :: Int -> Int\nsuc n = succ n\n\nfib :: [Int]\nfib = 0 : 1 : zipWith (+) fib (tail fib)')

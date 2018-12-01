@@ -1,8 +1,8 @@
 // This is a generated file. Not intended for manual editing.
 package intellij.haskell.psi;
 
+import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElementVisitor;
-import org.jetbrains.annotations.NotNull;
 
 public class HaskellVisitor extends PsiElementVisitor {
 
@@ -112,7 +112,7 @@ public class HaskellVisitor extends PsiElementVisitor {
   }
 
   public void visitExpression(@NotNull HaskellExpression o) {
-      visitExpressionElement(o);
+    visitExpressionElement(o);
   }
 
   public void visitFielddecl(@NotNull HaskellFielddecl o) {
@@ -327,9 +327,9 @@ public class HaskellVisitor extends PsiElementVisitor {
     visitCompositeElement(o);
   }
 
-    public void visitTopDeclarationLine(@NotNull HaskellTopDeclarationLine o) {
-        visitCompositeElement(o);
-    }
+  public void visitTopDeclarationLine(@NotNull HaskellTopDeclarationLine o) {
+    visitCompositeElement(o);
+  }
 
   public void visitTtype(@NotNull HaskellTtype o) {
     visitCompositeElement(o);
@@ -403,9 +403,9 @@ public class HaskellVisitor extends PsiElementVisitor {
     visitCompositeElement(o);
   }
 
-    public void visitExpressionElement(@NotNull HaskellExpressionElement o) {
-        visitCompositeElement(o);
-    }
+  public void visitExpressionElement(@NotNull HaskellExpressionElement o) {
+    visitCompositeElement(o);
+  }
 
   public void visitNamedElement(@NotNull HaskellNamedElement o) {
     visitCompositeElement(o);
