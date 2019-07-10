@@ -31,16 +31,16 @@ public class HaskellVisitor extends PsiElementVisitor {
     visitCompositeElement(o);
   }
 
+  public void visitCdecl(@NotNull HaskellCdecl o) {
+    visitCompositeElement(o);
+  }
+
   public void visitCdeclDataDeclaration(@NotNull HaskellCdeclDataDeclaration o) {
     visitTopDeclaration(o);
   }
 
-  public void visitCdecls(@NotNull HaskellCdecls o) {
-    visitCompositeElement(o);
-  }
-
-  public void visitCidecls(@NotNull HaskellCidecls o) {
-    visitCompositeElement(o);
+  public void visitCidecl(@NotNull HaskellCidecl o) {
+    visitCdecl(o);
   }
 
   public void visitClassDeclaration(@NotNull HaskellClassDeclaration o) {
@@ -132,8 +132,16 @@ public class HaskellVisitor extends PsiElementVisitor {
     visitCompositeElement(o);
   }
 
+  public void visitExprRhs(@NotNull HaskellExprRhs o) {
+    visitCompositeElement(o);
+  }
+
   public void visitExpression(@NotNull HaskellExpression o) {
     visitExpressionElement(o);
+  }
+
+  public void visitExpressionGuard(@NotNull HaskellExpressionGuard o) {
+    visitGuard(o);
   }
 
   public void visitFielddecl(@NotNull HaskellFielddecl o) {
@@ -158,6 +166,14 @@ public class HaskellVisitor extends PsiElementVisitor {
   }
 
   public void visitGtycon(@NotNull HaskellGtycon o) {
+    visitCompositeElement(o);
+  }
+
+  public void visitGuard(@NotNull HaskellGuard o) {
+    visitCompositeElement(o);
+  }
+
+  public void visitGuardedRhs(@NotNull HaskellGuardedRhs o) {
     visitCompositeElement(o);
   }
 
@@ -230,6 +246,10 @@ public class HaskellVisitor extends PsiElementVisitor {
     visitExpression(o);
   }
 
+  public void visitLetGuard(@NotNull HaskellLetGuard o) {
+    visitGuard(o);
+  }
+
   public void visitListType(@NotNull HaskellListType o) {
     visitCompositeElement(o);
   }
@@ -262,6 +282,10 @@ public class HaskellVisitor extends PsiElementVisitor {
 
   public void visitParenExpression(@NotNull HaskellParenExpression o) {
     visitExpression(o);
+  }
+
+  public void visitPatternGuard(@NotNull HaskellPatternGuard o) {
+    visitGuard(o);
   }
 
   public void visitPragma(@NotNull HaskellPragma o) {

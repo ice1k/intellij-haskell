@@ -26,9 +26,21 @@ public class HaskellImplementationDeclarationImpl extends HaskellTopDeclarationI
   }
 
   @Override
+  @Nullable
+  public HaskellExprRhs getExprRhs() {
+    return PsiTreeUtil.getChildOfType(this, HaskellExprRhs.class);
+  }
+
+  @Override
   @NotNull
-  public List<HaskellExpression> getExpressionList() {
-    return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellExpression.class);
+  public HaskellExpression getExpression() {
+    return notNullChild(PsiTreeUtil.getChildOfType(this, HaskellExpression.class));
+  }
+
+  @Override
+  @NotNull
+  public List<HaskellGuardedRhs> getGuardedRhsList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellGuardedRhs.class);
   }
 
 }

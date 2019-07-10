@@ -5,12 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface HaskellLetAbstraction extends HaskellExpression {
-
-  @NotNull
-  List<HaskellCdecl> getCdeclList();
+public interface HaskellCdecl extends HaskellCompositeElement {
 
   @Nullable
-  HaskellExpression getExpression();
+  HaskellCdeclDataDeclaration getCdeclDataDeclaration();
+
+  @Nullable
+  HaskellTypeSignature getTypeSignature();
 
 }

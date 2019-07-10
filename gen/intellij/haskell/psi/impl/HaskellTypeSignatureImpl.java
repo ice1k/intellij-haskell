@@ -1,16 +1,19 @@
 // This is a generated file. Not intended for manual editing.
 package intellij.haskell.psi.impl;
 
+import java.util.List;
+
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import intellij.haskell.psi.*;
-import org.jetbrains.annotations.NotNull;
-import scala.Option;
-import scala.collection.immutable.Seq;
 
-import java.util.List;
+import static intellij.haskell.psi.HaskellTypes.*;
+import intellij.haskell.psi.*;
+import com.intellij.navigation.ItemPresentation;
+import scala.Option;
+import scala.collection.Seq;
 
 public class HaskellTypeSignatureImpl extends HaskellCompositeElementImpl implements HaskellTypeSignature {
 

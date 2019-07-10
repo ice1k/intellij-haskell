@@ -1,17 +1,19 @@
 // This is a generated file. Not intended for manual editing.
 package intellij.haskell.psi.impl;
 
+import java.util.List;
+
+import org.jetbrains.annotations.*;
 import com.intellij.lang.ASTNode;
-import com.intellij.navigation.ItemPresentation;
+import com.intellij.psi.PsiElement;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import intellij.haskell.psi.*;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import scala.Option;
-import scala.collection.immutable.Seq;
 
-import java.util.List;
+import static intellij.haskell.psi.HaskellTypes.*;
+import intellij.haskell.psi.*;
+import com.intellij.navigation.ItemPresentation;
+import scala.Option;
+import scala.collection.Seq;
 
 public class HaskellInstanceDeclarationImpl extends HaskellTopDeclarationImpl implements HaskellInstanceDeclaration {
 
@@ -29,9 +31,9 @@ public class HaskellInstanceDeclarationImpl extends HaskellTopDeclarationImpl im
   }
 
   @Override
-  @Nullable
-  public HaskellCidecls getCidecls() {
-    return PsiTreeUtil.getChildOfType(this, HaskellCidecls.class);
+  @NotNull
+  public List<HaskellCidecl> getCideclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellCidecl.class);
   }
 
   @Override

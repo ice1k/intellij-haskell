@@ -5,15 +5,12 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface HaskellImplementationDeclaration extends HaskellTopDeclaration {
-
-  @Nullable
-  HaskellExprRhs getExprRhs();
+public interface HaskellExprRhs extends HaskellCompositeElement {
 
   @NotNull
   HaskellExpression getExpression();
 
-  @NotNull
-  List<HaskellGuardedRhs> getGuardedRhsList();
+  @Nullable
+  HaskellWhereClause getWhereClause();
 
 }

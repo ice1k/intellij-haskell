@@ -5,11 +5,13 @@ import com.intellij.lang.ASTNode;
 import com.intellij.navigation.ItemPresentation;
 import com.intellij.psi.PsiElementVisitor;
 import com.intellij.psi.util.PsiTreeUtil;
-import intellij.haskell.psi.*;
+import intellij.haskell.psi.HaskellDefaultDeclaration;
+import intellij.haskell.psi.HaskellNamedElement;
+import intellij.haskell.psi.HaskellTtype;
+import intellij.haskell.psi.HaskellVisitor;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import scala.Option;
-import scala.collection.immutable.Seq;
+import scala.collection.Seq;
 
 import java.util.List;
 

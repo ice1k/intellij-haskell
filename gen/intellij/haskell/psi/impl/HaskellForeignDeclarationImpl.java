@@ -11,7 +11,7 @@ import intellij.haskell.psi.HaskellNamedElement;
 import intellij.haskell.psi.HaskellVisitor;
 import org.jetbrains.annotations.NotNull;
 import scala.Option;
-import scala.collection.immutable.Seq;
+import scala.collection.Seq;
 
 public class HaskellForeignDeclarationImpl extends HaskellTopDeclarationImpl implements HaskellForeignDeclaration {
 

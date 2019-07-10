@@ -9,7 +9,7 @@ import intellij.haskell.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import scala.Option;
-import scala.collection.immutable.Seq;
+import scala.collection.Seq;
 
 import java.util.List;
 
@@ -29,9 +29,9 @@ public class HaskellClassDeclarationImpl extends HaskellTopDeclarationImpl imple
   }
 
   @Override
-  @Nullable
-  public HaskellCdecls getCdecls() {
-    return PsiTreeUtil.getChildOfType(this, HaskellCdecls.class);
+  @NotNull
+  public List<HaskellCdecl> getCdeclList() {
+    return PsiTreeUtil.getChildrenOfTypeAsList(this, HaskellCdecl.class);
   }
 
   @Override

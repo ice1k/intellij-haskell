@@ -29,6 +29,10 @@ class HaskellParsingTest extends ParsingTestCase("", "hs", new HaskellParserDefi
     doTest(true, true)
   }
 
+  def testWhereClause(): Unit = {
+    doTest(true, true)
+  }
+
   def testImports(): Unit = {
     doTest(true, true)
   }

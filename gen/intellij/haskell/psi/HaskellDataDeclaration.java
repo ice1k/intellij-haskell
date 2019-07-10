@@ -1,13 +1,13 @@
 // This is a generated file. Not intended for manual editing.
 package intellij.haskell.psi;
 
-import com.intellij.navigation.ItemPresentation;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import scala.Option;
-import scala.collection.immutable.Seq;
-
 import java.util.List;
+
+import org.jetbrains.annotations.*;
+import com.intellij.psi.PsiElement;
+import com.intellij.navigation.ItemPresentation;
+import scala.Option;
+import scala.collection.Seq;
 
 public interface HaskellDataDeclaration extends HaskellTopDeclaration, HaskellDataConstructorDeclarationElement {
 

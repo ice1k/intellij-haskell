@@ -5,15 +5,9 @@ import java.util.List;
 import org.jetbrains.annotations.*;
 import com.intellij.psi.PsiElement;
 
-public interface HaskellImplementationDeclaration extends HaskellTopDeclaration {
-
-  @Nullable
-  HaskellExprRhs getExprRhs();
+public interface HaskellExpressionGuard extends HaskellGuard {
 
   @NotNull
   HaskellExpression getExpression();
-
-  @NotNull
-  List<HaskellGuardedRhs> getGuardedRhsList();
 
 }

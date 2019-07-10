@@ -30,6 +30,7 @@
   implements("type_signature|type_declaration|class_declaration|instance_declaration|type_family_declaration|deriving_declaration|type_instance_declaration|default_declaration")="intellij.haskell.psi.HaskellDeclarationElement"
   implements("default_declaration|foreign_declaration|module_declaration")="intellij.haskell.psi.HaskellDeclarationElement"
   extends(".*_declaration")=top_declaration
+  extends(".*_guard")=guard
 
   methods("data_declaration|newtype_declaration")=[getName getPresentation getIdentifierElements getModuleName getDataTypeConstructor]
   implements("data_declaration|newtype_declaration")="intellij.haskell.psi.HaskellDataConstructorDeclarationElement"
@@ -86,7 +87,15 @@ import_package_name         ::= text_literal
 top_declaration             ::= type_declaration | data_declaration | newtype_declaration | class_declaration | instance_declaration | default_declaration |
                                   foreign_declaration | type_family_declaration | deriving_declaration | type_instance_declaration | type_signature |
                                   pragma | fixity_declaration | DIRECTIVE | implementation_declaration
-implementation_declaration  ::= expression EQUAL expression {pin=2}
+implementation_declaration  ::= expression EQUAL rhs {pin=2}
+private rhs                 ::= expr_rhs | guarded_rhs+
+expr_rhs                    ::= expression where_clause? {pin=1}
+guarded_rhs                 ::= guards EQUAL expression {pin=1}
+private guards              ::= VERTICAL_BAR guard {pin=1}
+guard                       ::= pattern_guard | let_guard | expression_guard
+pattern_guard               ::= expression LEFT_ARROW expression {pin=2}
+let_guard                   ::= LET cdecls {pin=1}
+expression_guard            ::= expression
 
 type_declaration            ::= TYPE onls simpletype onls COLON_COLON onls ttype |
                                   TYPE onls simpletype onls (EQUAL | WHERE) onls (ttype | type_signature) (DOUBLE_RIGHT_ARROW ttype)? |
@@ -240,15 +249,16 @@ cname_dot_dot               ::= dot_dot | cname
 newconstr                   ::= newconstr_fielddecl | q_name atype
 newconstr_fielddecl         ::= q_name onls LEFT_BRACE? onls type_signature onls RIGHT_BRACE?
 
-cdecls                      ::= cdecl (nls cdecl)*
-cidecls                     ::= cidecl (nls cidecl)*
+private cdecls              ::= cdecl (nls cdecl)*
+private cidecls             ::= cidecl (nls cidecl)*
 
 // copy of data_declaration but without all onls
 cdecl_data_declaration      ::= DATA (onls pragma)? onls (LEFT_PAREN onls kind_signature onls RIGHT_PAREN)* onls simpletype (onls LEFT_PAREN onls kind_signature onls RIGHT_PAREN)* (onls COLON_COLON ttype)? q_name*
-private cdecl               ::= type_signature | cdecl_data_declaration | cidecl
+cdecl                       ::= type_signature | cdecl_data_declaration | cidecl
 
-private cidecl              ::= pragma | instance_declaration | default_declaration |
+cidecl                      ::= pragma | instance_declaration | default_declaration |
                                   newtype_declaration | data_declaration | type_declaration | type_family_declaration | implementation_declaration
+                                  {extends=cdecl}
 
 expression                  ::= let_abstraction | do_notation_expression | if_expression | application_expression | case_of_expression | atom
 paren_expression            ::= LEFT_PAREN expression RIGHT_PAREN

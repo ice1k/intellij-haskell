@@ -7,7 +7,7 @@ import com.intellij.psi.util.PsiTreeUtil;
 import intellij.haskell.psi.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import scala.collection.immutable.Seq;
+import scala.collection.Seq;
 
 import java.util.List;
 
